@@ -1,0 +1,141 @@
+{
+  "story_key": "JACTIV-743",
+  "branch": "architecture-jactiv-743",
+  "revision": 1,
+  "process_name": "NoPoInvoiceChaser",
+  "process_kebab": "no-po-invoice-chaser",
+  "solution_name": "no-po-invoice-chaser-743",
+  "epic_number": "743",
+  "delivery_model": "cloud",
+  "level_0_outcome": "proceed",
+  "level_0_findings": [],
+  "need_profile": "Weekday automated run queries Coupa for draft/new invoices in the past seven days with no properly linked PO, counts qualifying records, and sends one Slack Block Kit DM to the AP SME; sends nothing on a clean day; Weekday scheduler at 10:00 Romania time ...",
+  "sdd_scope": "single-product",
+  "primary_product": "api-workflows",
+  "blocked_products": [
+    {
+      "product": "maestro-bpmn",
+      "reason": "platform matrix",
+      "alternative_applied": "api-workflows covers the need"
+    },
+    {
+      "product": "ixp",
+      "reason": "platform matrix",
+      "alternative_applied": "api-workflows covers the need"
+    }
+  ],
+  "projects": [
+    {
+      "name": "no-po-invoice-chaser-api",
+      "kebab": "no-po-invoice-chaser-api",
+      "product": "api-workflows",
+      "skill": "uipath-api-workflow",
+      "role": "primary",
+      "authoring_mode": "n/a",
+      "framework": "n/a",
+      "sdd_file": "docs/sdd-jactiv-743-no-po-invoice-chaser.md",
+      "build_order": 1,
+      "why": "single pinned project inside the solution"
+    }
+  ],
+  "integrated_components": [
+    {
+      "type": "integration-service",
+      "name": "coupa-uipath-test",
+      "host_project": "no-po-invoice-chaser-api",
+      "skill": "uipath-platform",
+      "why": "existing Coupa connection (5fadfc73-a372-46ae-a27c-2481741eed07)"
+    },
+    {
+      "type": "integration-service",
+      "name": "slack-product-test-app",
+      "host_project": "no-po-invoice-chaser-api",
+      "skill": "uipath-platform",
+      "why": "existing Slack connection (43d506f7-7de2-4798-aac1-9522e2e45dbb)"
+    }
+  ],
+  "queues": [],
+  "capability_addons": [
+    "integration-service"
+  ],
+  "sdd_files": [
+    {
+      "path": "docs/sdd-jactiv-743-no-po-invoice-chaser.md",
+      "template": "api-workflow-sdd-template.md",
+      "role": "single-product",
+      "project": "no-po-invoice-chaser-api"
+    }
+  ],
+  "tasks_file": "no-po-invoice-chaser-tasks.md",
+  "decisions": [
+    {
+      "level": "Constraint Gate",
+      "picked": "cloud, modern folders",
+      "reason": "org fact; blocked: maestro-bpmn, ixp",
+      "source": "default"
+    },
+    {
+      "level": "Level 1",
+      "picked": "api-workflows",
+      "reason": "pinned by FORCED_PRODUCT",
+      "source": "steer"
+    },
+    {
+      "level": "Level 2.5",
+      "picked": "one project, no dispatcher/performer split",
+      "reason": "pinned by FORCED_SCOPE",
+      "source": "steer"
+    },
+    {
+      "level": "Level 3",
+      "picked": "Integration Service connector calls",
+      "reason": "considerations §4 is the only approved shape for external calls",
+      "source": "default"
+    }
+  ],
+  "architect_review_items": [
+    {
+      "section": "PDD §15",
+      "item": "OQ-01 - Clean-day message conflict",
+      "question": "`[SME REVIEW]` Section 7.1 exception table says send a congratulatory Slack message on a clean day; BR-007 and section 4.3 say send nothing — confirm which is required.",
+      "default_applied": "carried forward as the PDD states it",
+      "blocking": false
+    },
+    {
+      "section": "PDD §15",
+      "item": "OQ-02 - Coupa access method",
+      "question": "`[SME REVIEW]` Confirm REST API vs UI automation, production base URL, and auth credential type.",
+      "default_applied": "carried forward as the PDD states it",
+      "blocking": false
+    },
+    {
+      "section": "PDD §15",
+      "item": "OQ-03 - Status filter URL param",
+      "question": "`[SME REVIEW]` Source Coupa URL example uses status_eq=draft only; confirm whether the API supports filtering both draft and new in one call.",
+      "default_applied": "carried forward as the PDD states it",
+      "blocking": false
+    },
+    {
+      "section": "PDD §15",
+      "item": "OQ-04 - Future-state diagram shows retry logic",
+      "question": "`[SME REVIEW]` image2.png shows 3 retries for Coupa query and Slack send with an error-message path, contradicting BR-08/BR-09 — confirm authoritative behaviour.",
+      "default_applied": "carried forward as the PDD states it",
+      "blocking": false
+    },
+    {
+      "section": "PDD §15",
+      "item": "OQ-05 - Date format in message footer",
+      "question": "`[SME REVIEW]` Source next-steps item 3 flags date format as unconfirmed; confirm format for window_start/window_end in Slack footer.",
+      "default_applied": "carried forward as the PDD states it",
+      "blocking": false
+    },
+    {
+      "section": "PDD §15",
+      "item": "OQ-06 - Production Coupa base URL",
+      "question": "`[SME REVIEW]` Only test URL (uipath-test.coupahost.com) appears in source; supply production URL before build.",
+      "default_applied": "carried forward as the PDD states it",
+      "blocking": false
+    }
+  ],
+  "revision_impact": "first design"
+}
