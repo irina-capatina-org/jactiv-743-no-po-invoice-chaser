@@ -1,0 +1,12 @@
+{
+  "DocVersion": "1.0.0",
+  "StudioMinVersion": "2025.10.0",
+  "SolutionId": "211d4618-55e7-43df-b67f-1ca60c1c7af2",
+  "Projects": [
+    {
+      "Type": "Api",
+      "ProjectRelativePath": "no-po-invoice-chaser-api/project.uiproj",
+      "Id": "a0d1fde9-57a3-4a6a-95b0-84d944dd6e24"
+    }
+  ]
+}

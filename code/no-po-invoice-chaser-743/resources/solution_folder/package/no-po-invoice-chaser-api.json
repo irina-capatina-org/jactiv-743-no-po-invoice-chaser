@@ -1,0 +1,23 @@
+{
+  "docVersion": "1.0.0",
+  "resource": {
+    "name": "no-po-invoice-chaser-api",
+    "kind": "package",
+    "apiVersion": "orchestrator.uipath.com/v1",
+    "projectKey": "a0d1fde9-57a3-4a6a-95b0-84d944dd6e24",
+    "isOverridable": true,
+    "dependencies": [],
+    "runtimeDependencies": [],
+    "folders": [
+      {
+        "fullyQualifiedName": "solution_folder"
+      }
+    ],
+    "spec": {
+      "name": "no-po-invoice-chaser-api"
+    },
+    "locks": [],
+    "key": "9966a7d0-1a7b-4c10-905f-9bf9922b2522",
+    "files": []
+  }
+}
