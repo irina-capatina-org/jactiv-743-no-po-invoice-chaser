@@ -15,8 +15,8 @@
       "story": "JACTIV-743"
     },
     "Architecture": {
-      "status": "in-review",
-      "updatedAt": "2026-09-23T01:09:24Z",
+      "status": "done",
+      "updatedAt": "2026-09-23T01:09:30Z",
       "task": "Determining architecture",
       "run": 35804810107,
       "decidedBy": "auto",
